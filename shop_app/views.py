@@ -7,14 +7,17 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from decimal import Decimal
 import uuid
+from rest_framework import generics
+from rest_framework import filters
+
 
 BASE_URL = ""
 
-@api_view(["GET"])
-def products(request):
-    products = Product.objects.all()
-    serializer = ProductSerializer(products,many=True)
-    return Response(serializer.data)
+class products(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['category']
 
 @api_view(["GET"])
 def product_detail(request,slug):
