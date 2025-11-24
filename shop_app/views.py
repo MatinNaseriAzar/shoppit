@@ -7,13 +7,13 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from decimal import Decimal
 import uuid
-from rest_framework import generics
 from rest_framework import filters
+from rest_framework.viewsets import ModelViewSet
 
 
 BASE_URL = ""
 
-class products(generics.ListAPIView):
+class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter]
